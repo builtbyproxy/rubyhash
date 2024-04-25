@@ -1,12 +1,7 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-interface Props {
-  title: string;
-  subtitle: string;
-}
-
-const Layout: React.FC<Props> = ({ title, subtitle, children }) => {
+const Layout = ({ title, subtitle, children }) => {
   return (
     <div className={styles.container}>
       <header>

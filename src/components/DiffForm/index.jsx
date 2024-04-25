@@ -7,7 +7,7 @@ const convertToJson = line => {
   return line.replace(/"=>"/g, '":"').replace(/"=>/g, '":').replace(/":nil/g, '":null');
 }
 
-const DiffResults = ({ diff }: { diff: string }) => {
+const DiffResults = ({ diff }) => {
   const [expected, actual] = diff.split("\n").map((line) => line.startsWith('"-') 
     ? convertToJson(line.substring(2)) 
     : convertToJson(line.substring(3, line.length-1))
@@ -25,7 +25,7 @@ const DiffForm = () => {
   const [diff, setDiff] = useState(ExampleDiff);
   const [step, setStep] = useState(1);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     setStep(2)
     // Handle the submission of the diff string here
