@@ -68,7 +68,7 @@ const DiffForm = () => {
        <>
          <TextField
           sx={{ width: "100%" }}
-          label="Paste your Minitest Diff here straight from the console"
+          label="Paste your Ruby Hash here straight from the console. Preface with a '-' for the expected value and a '+' for the actual value."
           placeholder={ExampleDiff}
           multiline
           rows={20}
