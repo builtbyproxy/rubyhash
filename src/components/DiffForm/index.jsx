@@ -4,7 +4,18 @@ import ReactDiffViewer from 'react-diff-viewer'
 import styles from "./styles.module.scss";
 
 const convertToJson = line => {
-  return line.replace(/"=>"/g, '":"').replace(/"=>/g, '":').replace(/":nil/g, '":null');
+  // Replace the hashrockets and nil values with colons and null
+  const formattedLine = line.replace(/"=>"/g, '":"').replace(/"=>/g, '":').replace(/":nil/g, '":null');
+  const unorderedObject = JSON.parse(formattedLine);
+  const orderedObject = Object.keys(unorderedObject).sort().reduce(
+    (obj, key) => { 
+      obj[key] = unorderedObject[key]; 
+      return obj;
+    }, 
+    {}
+  );
+
+  return JSON.stringify(orderedObject, null, 2);
 }
 
 const DiffResults = ({ diff }) => {
@@ -13,12 +24,15 @@ const DiffResults = ({ diff }) => {
     : convertToJson(line.substring(3, line.length-1))
   );
 
+  console.log("FOund Expected: ", expected)
+  console.log("Found Actual: ", actual)
+
   return (
     <ReactDiffViewer oldValue={expected} newValue={actual} splitView={true}/>
   );
 }
 
-const ExampleDiff = `"-{"uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "provider"=>"email", "allow_password_change"=>false, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "terms_of_service_accepted_at"=>nil, "privacy_policy_accepted_at"=>nil, "roles"=>nil}
+const ExampleDiff = `"-{"uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "provider"=>"email", "allow_password_change"=>true, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "terms_of_service_accepted_at"=>nil, "privacy_policy_accepted_at"=>nil, "roles"=>nil}
   +{"provider"=>"email", "uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "allow_password_change"=>false, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "privacy_policy_accepted_at"=>nil, "terms_of_service_accepted_at"=>nil, "roles"=>{}}"`
 
 const DiffForm = () => {
