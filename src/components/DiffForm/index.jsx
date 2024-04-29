@@ -19,21 +19,32 @@ const convertToJson = line => {
 }
 
 const DiffResults = ({ diff }) => {
-  const [expected, actual] = diff.split("\n").map((line) => line.startsWith('"-') 
-    ? convertToJson(line.substring(2)) 
-    : convertToJson(line.substring(3, line.length-1))
+  const [expected, actual] = diff.split("\n").map((line) => line.startsWith('-') 
+    ? convertToJson(line.substring(1)) 
+    : convertToJson(line.substring(3))
   );
 
-  console.log("FOund Expected: ", expected)
-  console.log("Found Actual: ", actual)
+  const styles = {
+    contentText: {
+      textAlign: 'left'
+    },
+    wordDiff: {
+      padding: 0
+    }
+  }
 
   return (
-    <ReactDiffViewer oldValue={expected} newValue={actual} splitView={true}/>
+    <ReactDiffViewer 
+      styles={styles} 
+      oldValue={expected} 
+      newValue={actual} 
+      splitView={true}
+    />
   );
 }
 
-const ExampleDiff = `"-{"uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "provider"=>"email", "allow_password_change"=>true, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "terms_of_service_accepted_at"=>nil, "privacy_policy_accepted_at"=>nil, "roles"=>nil}
-  +{"provider"=>"email", "uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "allow_password_change"=>false, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "privacy_policy_accepted_at"=>nil, "terms_of_service_accepted_at"=>nil, "roles"=>{}}"`
+const ExampleDiff = `-{"uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "provider"=>"email", "allow_password_change"=>true, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "terms_of_service_accepted_at"=>nil, "privacy_policy_accepted_at"=>nil, "roles"=>nil}
+  +{"provider"=>"email", "uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "allow_password_change"=>false, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "privacy_policy_accepted_at"=>nil, "terms_of_service_accepted_at"=>nil, "roles"=>{}}`
 
 const DiffForm = () => {
   const [diff, setDiff] = useState(ExampleDiff);
@@ -70,6 +81,7 @@ const DiffForm = () => {
           color="primary"
           endIcon={<InputAdornment position="end">⚡</InputAdornment>}
           onClick={handleSubmit}
+          disabled={diff == null}
         >
           Submit
         </Button>
