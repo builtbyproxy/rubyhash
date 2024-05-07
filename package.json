@@ -15,8 +15,10 @@
     "@mui/material": "^5.15.15",
     "change-case": "^5.4.4",
     "react": "^18.2.0",
+    "react-cookie-consent": "^9.0.0",
     "react-diff-viewer": "^3.1.1",
     "react-dom": "^18.2.0",
+    "react-ga": "^3.3.1",
     "sass": "^1.75.0"
   },
   "devDependencies": {
