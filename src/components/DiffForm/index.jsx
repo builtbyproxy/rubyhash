@@ -1,4 +1,4 @@
-import { Stack, InputAdornment, TextField, Button } from "@mui/material";
+import { Stack, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import ReactDiffViewer from 'react-diff-viewer'
 import styles from "./styles.module.scss";
@@ -79,11 +79,10 @@ const DiffForm = () => {
           type="submit"
           variant="contained"
           color="primary"
-          endIcon={<InputAdornment position="end">⚡</InputAdornment>}
           onClick={handleSubmit}
           disabled={diff == null}
         >
-          Submit
+          Compare
         </Button>
        </> ) : (
         <>
@@ -91,7 +90,6 @@ const DiffForm = () => {
           <Button
             variant="contained"
             color="primary"
-            endIcon={<InputAdornment position="end">⚡</InputAdornment>}
             onClick={handleClear}
           >
             Clear
