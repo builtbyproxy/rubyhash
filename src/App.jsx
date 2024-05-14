@@ -5,7 +5,7 @@ import BlogList from './components/BlogList'
 
 const Home = () => {
   return (
-    <Layout title="RubyHash" subtitle="Welcome to RubyHash">
+    <Layout title="RubyHash">
       <DiffForm />
       {/* <BlogList /> */}
     </Layout>
