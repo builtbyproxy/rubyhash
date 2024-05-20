@@ -21,7 +21,7 @@ const convertToJson = line => {
 const DiffResults = ({ diff }) => {
   const [expected, actual] = diff.split("\n").map((line) => line.startsWith('-') 
     ? convertToJson(line.substring(1)) 
-    : convertToJson(line.substring(3))
+    : convertToJson(line.substring(1))
   );
 
   const styles = {
@@ -44,7 +44,7 @@ const DiffResults = ({ diff }) => {
 }
 
 const ExampleDiff = `-{"uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "provider"=>"email", "allow_password_change"=>true, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "terms_of_service_accepted_at"=>nil, "privacy_policy_accepted_at"=>nil, "roles"=>nil}
-  +{"provider"=>"email", "uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "allow_password_change"=>false, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "privacy_policy_accepted_at"=>nil, "terms_of_service_accepted_at"=>nil, "roles"=>{}}`
++{"provider"=>"email", "uid"=>"darrick@dickens.test", "id"=>"018da041-b5ec-fa09-96f0-321f202f038c", "name"=>"Donn Sporer", "email"=>"darrick@dickens.test", "allow_password_change"=>false, "created_at"=>"2024-02-13T05:17:57.483+03:00", "company_id"=>"018da041-b5e8-9578-1a42-797ada705d66", "privacy_policy_accepted_at"=>nil, "terms_of_service_accepted_at"=>nil, "roles"=>{}}`
 
 const DiffForm = () => {
   const [diff, setDiff] = useState(ExampleDiff);
