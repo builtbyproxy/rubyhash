@@ -19,9 +19,10 @@ const convertToJson = line => {
 }
 
 const DiffResults = ({ diff }) => {
-  const [expected, actual] = diff.split("\n").map((line) => line.startsWith('-') 
-    ? convertToJson(line.substring(1)) 
-    : convertToJson(line.substring(1))
+  const [expected, actual] = diff
+      .trim()
+      .split("\n")
+      .map((line) => convertToJson(line.substring(1))
   );
 
   const styles = {
